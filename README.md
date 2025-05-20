@@ -9,29 +9,49 @@ This project is a RESTful API built with [NestJS](https://nestjs.com/), showcasi
 ##  Features
 
 ###  User Management
-- Create, read, update, and delete users.
+- **Create User** – Register new users with validated input data.
+- **Read Users** – Fetch individual or multiple user records.
+- **Update User** – Update user information securely.
+- **Delete User** – Remove user accounts with proper authorization checks.
 
 ###  Authentication
-- JWT-based authentication using Passport strategy.
-- Refresh token system for seamless token renewal.
-- Session Id field for handeling `Sign In`, and `Logout` endpoints.
-- Proper token handling during logout.
+- **JWT Authentication** – Implements access tokens with Passport JWT strategy for secure API access.
+- **Refresh Tokens** – Automatically issue new tokens to maintain user sessions without forcing frequent logins.
+- **Session ID Handling** – Each login generates a unique session ID associated with the refresh token, enabling better token lifecycle management.
+- **Sign Up / Sign In / Logout** – Cleanly implemented endpoints with proper request validation and response formatting.
+- **Token Revocation on Logout** – Refresh tokens and session IDs are invalidated during logout to prevent unauthorized reuse.
 
 ###  Role-Based Access Control
-- Restrict access to endpoints based on user roles (e.g., `user`, `admin`).
+Protect and control access to different parts of the API using role-based guards:
+
+- **Role Decorator** – Easily define roles required to access specific endpoints.
+- **User Roles** – Default roles like `user` and `admin` control access at various levels of the application.
+- **Roles Guard** – Checks the requesting user's role against required roles for secure access to protected resources.- Restrict access to endpoints based on user roles (e.g., `user`, `admin`).
 
 ###  Validation
-- Uses **DTOs** with `class-validator` to ensure input validation and data security.
+Ensure data integrity and security using a structured validation system:
+
+- **DTOs (Data Transfer Objects)** – Define schemas for incoming data using TypeScript classes.
+- **class-validator** – Validate user input using decorators such as `@IsEmail`, `@Length`, etc.
+- **class-transformer** – Automatically transform plain objects into class instances for validation.
+- Helps prevent invalid or malicious data from entering your business logic.
 
 ###  Guards
-- Custom JWT authentication guard (extending Passport JWT strategy).
-- Role guard to restrict access based on user roles.
+Protect routes using NestJS guards to handle authorization logic:
+
+- **JWT Auth Guard** – Validates JWTs and attaches the user to the request object if the token is valid.
+- **Roles Guard** – Ensures only users with the correct role(s) can access certain endpoints.
+- Guards are layered with decorators (`@UseGuards`) and custom logic for maximum flexibility.
 
 ###  Filters
-- Global HTTP exception filter for consistent and secure error handling.
+Handle unexpected and known errors using a global exception filter:
+
+- **Global HTTP Exception Filter** – Catches all unhandled exceptions and formats error responses consistently.
 
 ###  Interceptors
-- Transform interceptor to format all responses into a standardized structure.
+Customize and format API responses consistently across all routes:
+
+- **Transform Interceptor** – Wraps responses in a standard format (e.g., `{ statusCode, data }`).
 
 ---
 
